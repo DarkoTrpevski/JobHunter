@@ -1,0 +1,7 @@
+:root {
+  --header-height: 88px;
+  --primary-color: #33D3D9;
+}
+ul, li {
+  list-style: none;
+}
