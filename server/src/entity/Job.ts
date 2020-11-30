@@ -19,6 +19,9 @@ export class Job {
   @Column({type: "varchar" , length: 255})
   postedAt: string;
 
+  @Column({type: "varchar" , length: 255})
+  jobOrigin: string;
+
   // @Column()
   // @CreateDateColumn()
   // created_at: Date;

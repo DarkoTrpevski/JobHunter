@@ -2,6 +2,26 @@ import { theme } from "@chakra-ui/core"
  
 const customTheme = {
   ...theme,
+  mode: {
+    light: {
+      logo: "#102a43",
+      background: "#fff",
+      cardBG: "#EFF2FB",
+      text: "#334E68",
+      heading: "#102a43",
+      icon: "#9FB3C8",
+      link: "#9F00FF",
+    },
+    dark: {
+      logo: "#ffffff",
+      background: "#102a43",
+      cardBG: "#243B53",
+      text: "#EFF2FB",
+      heading: "#fff",
+      icon: "#486581",
+      link: "#F8CCFF",
+    },
+  },
   colors: {
     ...theme.colors,
     primary: {

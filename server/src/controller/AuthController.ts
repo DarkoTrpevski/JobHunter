@@ -12,32 +12,34 @@ export class AuthController {
 
     try {
       const{ name, email, password } = req.body;
+
+      console.log('Inside registerUser request body is', req.body);
   
-        //Get the User repository
-        const userRepository = getManager().getRepository(User);
-  
-        //Load a user by a given email
-        const foundUser = await userRepository.findOne({ email: email })
-        //If user is found return 401 to the client
-        if (foundUser) {
-          return res.status(401).json("User already exist!");
-        }
-        //If User is NOT found, salt the password of the user
-        const salt = await bcrypt.genSalt(10);
-        const bcryptPassword = await bcrypt.hash(password, salt);
-  
-        //Create a new User Entity
-        const user = userRepository.create();
-        user.name = name;
-        user.email = email;
-        user.password = bcryptPassword;
-        user.jobs = [];
-        //Save User in DB
-        const savedUser = await userRepository.save(user);
-        //Generate
-        const jwtToken = jwtGenerator(savedUser.id);
-        //Return a JWT
-        res.json({ jwtToken });
+      //Get the User repository
+      const userRepository = getManager().getRepository(User);
+
+      //Load a user by a given email
+      const foundUser = await userRepository.findOne({ email: email })
+      //If user is found return 401 to the client
+      if (foundUser) {
+        return res.status(401).json("User already exist!");
+      }
+      //If User is NOT found, salt the password of the user
+      const salt = await bcrypt.genSalt(10);
+      const bcryptPassword = await bcrypt.hash(password, salt);
+
+      //Create a new User Entity
+      const user = userRepository.create();
+      user.name = name;
+      user.email = email;
+      user.password = bcryptPassword;
+      user.jobs = [];
+      //Save User in DB
+      const savedUser = await userRepository.save(user);
+      //Generate
+      const jwtToken = jwtGenerator(savedUser.id);
+      //Return a JWT
+      res.json({ jwtToken });
   
     } catch (err) {
       console.log(err.message);
@@ -46,7 +48,7 @@ export class AuthController {
   
   }
 
-  public loginUser = async(req, res) => {
+  public loginUser = async(req: Request, res: Response) => {
     try {
   
       const{ email, password } = req.body;
@@ -79,7 +81,7 @@ export class AuthController {
       res.status(500).send("Server error");
     }
   }
-  public checkUserAuth = async(req, res) => {
+  public checkUserAuth = async(req: Request, res: Response) => {
     try {
       //If the user passes our middleware, we know the user is valid
       res.json(true);

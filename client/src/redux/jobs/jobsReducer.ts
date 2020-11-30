@@ -1,8 +1,9 @@
-import { GET_JOBS, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE } from './jobActionTypes';
+import { GET_JOBS, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE, SAVE_JOB_TO_DASH } from './jobActionTypes';
 import { JobAction, JobsState } from '../redux-typescript/ReduxTypes';
 
 const initialState: JobsState = {
   jobs: [],
+  backendMsg: "",
   jobDetail: null,
   loading: false,
   hasErrors: false,
@@ -55,6 +56,12 @@ const jobsReducer = (state: JobsState = initialState, action: JobAction) => {
       return {
         ...state,
         jobDetail: showDetails(state.jobs, payload)
+      }
+    /*CONTACT BACKEND TO SAVE JOB TO DATABASE*/
+    case SAVE_JOB_TO_DASH:
+      return {
+        ...state,
+        backendMsg: payload
       }
     default:
       return state;

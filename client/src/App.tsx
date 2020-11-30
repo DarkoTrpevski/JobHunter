@@ -16,6 +16,7 @@ import NotFound from './pages/NotFound/NotFound';
 
 
 const App = () => {
+  
   return (
     <ThemeProvider theme={customTheme}>
       <ColorModeProvider>
@@ -34,10 +35,10 @@ const App = () => {
               </AuthLayout>
             </Route>
 
-            <Route path = {['/search', '/details/:id']}>
+            <Route path = {['/search', '/jobdetail/:id']}>
               <MainLayout>
                 <Route path = "/search" component = {JobSearch} />
-                <Route path="/details/:id" component={JobDetails} />
+                <Route path="/jobdetail/:id" component={JobDetails} />
               </MainLayout>
             </Route>
             

@@ -11,7 +11,7 @@ export class JobController {
   public saveJob = async(req: IUserRequest, res: Response) => {
 
     try {
-      const { title, location, companyName, postedAt, description }: Job = req.body;
+      const { title, location, companyName, postedAt, jobOrigin, description }: Job = req.body;
   
       //Create User repository
       const userRepository = getManager().getRepository(User);
@@ -27,6 +27,7 @@ export class JobController {
       job.location = location;
       job.companyName = companyName;
       job.postedAt = postedAt;
+      job.jobOrigin = jobOrigin;
       job.description = description;
       job.user = user;
   

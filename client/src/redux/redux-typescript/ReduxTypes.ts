@@ -8,6 +8,7 @@ interface IJob {
 }
 export type JobsState = {
   jobs: IJob[],
+  backendMsg: string,
   jobDetail: object | null,
   loading: boolean,
   hasErrors: boolean
@@ -36,9 +37,10 @@ interface IUser {
   email: string;
   password: string;
 }
-
 export type UserState = {
-  currentUser: object | null
+  currentUser: object | null,
+  isAuthenticated: boolean,
+  loading: boolean
 }
 export type UserType = {
   id: number;
@@ -50,4 +52,28 @@ export type UserAction = {
   type: string
   payload?: any
 }
-export type DispatchUserype = (args: UserAction) => UserAction
+export type DispatchUsertype = (args: UserAction) => UserAction
+
+
+
+export type UIState = {
+  darkMode: boolean
+}
+export type UIAction = {
+  type: string,
+  payload: boolean
+}
+export type DispatchDarkModeActionType = (args: UIAction) => UIAction
+
+
+export interface IAlert {
+  msg: string,
+  alertType: string,
+  id: string
+}
+export type AlertState = IAlert[]
+export type AlertAction = {
+  type: string,
+  payload: IAlert | string
+}
+export type DispatchAlertActionType = (args: AlertAction) => AlertAction

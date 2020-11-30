@@ -1,11 +1,31 @@
-import { SET_CURRENT_USER } from './userActionTypes';
-import { DispatchUserype, UserType } from '../redux-typescript/ReduxTypes';
+import { SET_CURRENT_USER, REGISTER_SUCCESS, AUTH_ERROR } from './userActionTypes';
+import { DispatchUsertype, UserType } from '../redux-typescript/ReduxTypes';
 
-export const setCurrentUser = (user: UserType) => (dispatch: DispatchUserype) => {
+
+export const registerUser = (user: any) => async(dispatch: any) => {
+  const URL = 'http://localhost:4000/auth/register';
+
+  try {
+    const res: Response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        "Content-type": "application/json"
+      }
+    });
+    const data: any = await res.json();
+    console.log('Inside userActions registerUser, the token is: ', data)
+    dispatch({ type: REGISTER_SUCCESS, payload: data });
+  } catch (err) {
+    console.log(err.message);
+    dispatch({ type: AUTH_ERROR });
+  }
+};
+
+export const setCurrentUser = (user: UserType) => (dispatch: DispatchUsertype) => {
   try {
     dispatch({
-      type: <string>SET_CURRENT_USER,
-      // type: SET_CURRENT_USER,
+      type: SET_CURRENT_USER,
       payload: user
     });
   } catch (err) {

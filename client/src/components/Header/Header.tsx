@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Heading } from '@chakra-ui/core';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { ThemeSelector } from '../ThemeSelector/ThemeSelector';
+import ThemeSelector from '../ThemeSelector/ThemeSelector';
 
 interface HeaderProps {}
 

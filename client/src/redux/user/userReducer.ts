@@ -2,7 +2,9 @@ import { UserAction, UserState } from '../redux-typescript/ReduxTypes';
 import { SET_CURRENT_USER } from './userActionTypes';
 
 const initialState = {
-  currentUser: null
+  currentUser: null,
+  isAuthenticated: false,
+  loading: true,
 }
 
 const authReducer = (state: UserState = initialState, action: UserAction) => {
