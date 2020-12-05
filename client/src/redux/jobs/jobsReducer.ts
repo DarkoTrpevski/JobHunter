@@ -1,5 +1,5 @@
 import { GET_JOBS, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE, SAVE_JOB_TO_DASH } from './jobActionTypes';
-import { JobAction, JobsState } from '../redux-typescript/ReduxTypes';
+import { JobAction, JobsState } from '../types/types';
 
 const initialState: JobsState = {
   jobs: [],

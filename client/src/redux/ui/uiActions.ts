@@ -1,4 +1,4 @@
-import { DispatchDarkModeActionType } from '../redux-typescript/ReduxTypes';
+import { DispatchDarkModeActionType } from '../types/types';
 import { SET_DARK_MODE } from './uiActionsTypes';
 
 export const setDarkMode = (value: boolean) => (dispatch: DispatchDarkModeActionType): void => {

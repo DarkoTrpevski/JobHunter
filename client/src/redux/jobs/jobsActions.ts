@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { Job } from '../../pages/JobSearch/types';
-import { DispatchJobType, JobType } from '../redux-typescript/ReduxTypes';
+import { DispatchJobType, JobType } from '../types/types';
 import { GET_JOBS, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE, SAVE_JOB_TO_DASH } from './jobActionTypes';
 
 const allowCors = 'https://cors-anywhere.herokuapp.com';

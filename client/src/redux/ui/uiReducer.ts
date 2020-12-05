@@ -1,4 +1,4 @@
-import { UIAction, UIState } from '../redux-typescript/ReduxTypes';
+import { UIAction, UIState } from '../types/types';
 import { SET_DARK_MODE } from './uiActionsTypes';
 
 const initialState = {
