@@ -1,4 +1,4 @@
-import { AlertAction, AlertState } from '../redux-typescript/ReduxTypes';
+import { AlertAction, AlertState } from '../types/types';
 import { SET_ALERT, REMOVE_ALERT } from './alertTypes';
 
 const initialState: AlertState = [];

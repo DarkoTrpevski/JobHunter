@@ -1,12 +1,23 @@
 import { Flex, Box, Heading, Text, Stack, Button } from '@chakra-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Center } from '@chakra-ui/react';
 import React from 'react'
 import './AuthLayout.css';
+import { connect } from 'react-redux';
+import { AppState } from '../../redux/types/types';
 
-interface AuthLayoutProps {}
+interface AuthLayoutProps {
+  isAuthenticated: boolean
+}
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({children}) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({children, isAuthenticated}) => {
+
+
+  //Redirect if authenticated
+  if(isAuthenticated) {
+    return <Redirect to = "/dashboard" />
+  }
+
   return (
 
     <Flex className = "AuthLayout" width = "full" align = "center" justifyContent = "center">
@@ -48,4 +59,9 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({children}) => {
 
   );
 }
-export default AuthLayout;
+
+const mapStateToProps = (state: AppState) => ({
+  isAuthenticated: state.authReducer.isAuthenticated
+})
+
+export default connect(mapStateToProps)(AuthLayout);

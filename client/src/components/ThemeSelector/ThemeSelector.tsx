@@ -32,7 +32,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({ darkMode, setDarkMode }) 
   }
 
   return (
-    <Box ml = {5}>
+    <Box ml = {3}>
       <IconButton variant = "ghost" icon={colorMode === 'light' ? "moon" : "sun"} aria-label={colorMode === 'light' ? "Moon Icon" : "Sun Icon"} onClick={toggleDarkMode} />
     </Box>
   )

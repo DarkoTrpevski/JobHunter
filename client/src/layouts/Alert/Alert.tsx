@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IAlert } from '../../redux/redux-typescript/ReduxTypes';
+import { IAlert } from '../../redux/types/types';
 
 interface AlertProps {
   alerts: IAlert[]
