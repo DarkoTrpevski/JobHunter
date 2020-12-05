@@ -1,13 +1,25 @@
 import { combineReducers } from 'redux';
+import alertReducer from './alert/alertReducer';
 import jobsReducer from './jobs/jobsReducer';
-import userReducer from './user/userReducer';
+import authReducer from './auth/authReducer';
 import uiReducer from './ui/uiReducer';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
+const persistConfig = {
+  key: "root",
+  storage: storage,
+  whitelist: ['cart']
+}
 
 const rootReducer = combineReducers({
+  alertReducer: alertReducer,
   jobsReducer: jobsReducer,
-  userReducer: userReducer,
+  authReducer: authReducer,
   uiReducer: uiReducer
 });
 
-export default rootReducer;
+// export default rootReducer;
+
+//Exporting modified rootReducer with persist capabilities
+export default persistReducer(persistConfig, rootReducer);

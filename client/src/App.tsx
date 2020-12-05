@@ -1,49 +1,76 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
-import customTheme from './theme/theme';
+import { customTheme, resetConfig } from './theme/theme';
+import { AuthRoutes, NonAuthRoutes } from './routes/routes';
 //Layouts
 import AuthLayout from './layouts/AuthLayout/AuthLayout';
 import MainLayout from './layouts/MainLayout/MainLayout';
-import Header from './components/Header/Header';
 //Pages
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import JobDetails from './pages/JobDetails/JobDetails';
 import JobSearch from './pages/JobSearch/JobSearch';
+import Dashboard from './pages/Dashboard/Dashboard';
 import NotFound from './pages/NotFound/NotFound';
+//Redux
+import { connect } from 'react-redux';
+import { loadCurrentUser } from './redux/auth/authActions';
+import setAuthToken from './utils/setAuthToken';
+import PrivateRoute from './routes/PrivateRoute';
+import LandingLayout from './layouts/LandingLayout/LandingLayout';
 
+interface AppProps {
+  loadCurrentUser: () => void
+}
 
-const App = () => {
+const App: React.FC<AppProps> = ({ loadCurrentUser }) => {
+
+  if(localStorage.token) {
+    setAuthToken(localStorage.token)
+  }
+  
+  useEffect(() => {
+    loadCurrentUser();
+  },[])
   
   return (
     <ThemeProvider theme={customTheme}>
       <ColorModeProvider>
-        <CSSReset />
+        <CSSReset config = {resetConfig} />
         <div className="App">
         <Router>
-          <Header />
+          {/* <Header /> */}
           <Switch>
 
-            <Route exact path="/" component={Home} /> 
+            {/* <Route exact path = {NonAuthRoutes.home} render = {(props) => {
+              <Home />
+            }} /> */}
+            <Route exact path = {NonAuthRoutes.home} render={(props) => (
+              <LandingLayout>
+                <Home {...props} />
+              </LandingLayout>
+            )}/>
 
-            <Route path = {['/login', '/register']}>
+            <Route path = {[`${NonAuthRoutes.login}`, `${NonAuthRoutes.register}`]}>
               <AuthLayout>
-                <Route path='/login' component={Login} />
-                <Route path='/register' component={Register} />
+                <Route path={NonAuthRoutes.login} component={Login} />
+                <Route path={NonAuthRoutes.register} component={Register} />
               </AuthLayout>
             </Route>
 
-            <Route path = {['/search', '/jobdetail/:id']}>
+            <Route path = {[`${NonAuthRoutes.search}`, `${NonAuthRoutes.jobdetail}`]}>
               <MainLayout>
-                <Route path = "/search" component = {JobSearch} />
-                <Route path="/jobdetail/:id" component={JobDetails} />
+                <Route path = {NonAuthRoutes.search} component = {JobSearch} />
+                <Route path = {NonAuthRoutes.jobdetail} component={JobDetails} />
               </MainLayout>
-            </Route>
-            
-            <Route component={NotFound} />
+            </Route> 
 
+            <PrivateRoute path = {AuthRoutes.dashboard} Component = {Dashboard} />  
+
+            <Route component={NotFound} />
+            
           </Switch>
         </Router>
         </div>
@@ -52,4 +79,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default connect(null, { loadCurrentUser })(App);

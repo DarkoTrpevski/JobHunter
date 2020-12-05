@@ -2,6 +2,21 @@
   --header-height: 88px;
   --primary-color: #33D3D9;
 }
+body {
+  font-family: 'HelveticaLight', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 ul, li {
   list-style: none;
+}
+
+@font-face {
+  font-family: 'HelveticaLight';
+  src:  url('./fonts/HelveticaLight.woff') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'HelveticaThin';
+  src:  url('./fonts/HelveticaThin.woff') format('woff');
+  font-weight: 400;
 }
