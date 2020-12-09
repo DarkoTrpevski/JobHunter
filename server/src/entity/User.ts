@@ -5,7 +5,7 @@ import { Job } from "./Job";
 export class User {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    generatedId: number;
 
     @Column({type: "varchar" , length: 255})
     name: string;

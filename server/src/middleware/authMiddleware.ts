@@ -5,7 +5,8 @@ require("dotenv").config();
 
 //Middleware used to check if the JWT that is send is valid
 // export const authMiddleware = async(req: Request, res: Response, next: NextFunction) => {
-export const authMiddleware = async(req: IUserRequest, res: Response, next: NextFunction) => {
+export const authMiddleware = async(req: any, res: Response, next: NextFunction) => {
+// export const authMiddleware = async(req: IUserRequest, res: Response, next: NextFunction) => {
   try {
       //Grab the token from the request
       const jwtToken: string = req.header("token");
@@ -16,7 +17,7 @@ export const authMiddleware = async(req: IUserRequest, res: Response, next: Next
       const payload: any = jwt.verify(jwtToken, process.env.jwtSecret + "");
       //Setting the user id into the request
       req.user = payload.user;
-      console.log('Inside authMiddleware, request user is: ', req.user)
+      console.log('Inside authMiddleware, request user is: ', req.user.id)
       next();
   } catch (err) {
     console.log(err.message);

@@ -81,7 +81,7 @@ export class AuthController {
       const savedUser = await userRepository.save(user);
 
       //Generate
-      const jwtToken = jwtGenerator(savedUser.id);
+      const jwtToken = jwtGenerator(savedUser.generatedId);
       //Return jsonwebtoken
       res.json({ jwtToken });
     } catch (err) {
@@ -141,7 +141,7 @@ export class AuthController {
         return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
       }  
       //Generate
-      const jwtToken = jwtGenerator(foundUser.id);
+      const jwtToken = jwtGenerator(foundUser.generatedId);
       //Return a JWT
       res.json({ jwtToken });
       
@@ -151,13 +151,16 @@ export class AuthController {
     }
   }
 
-  public getCurrentUserProfile = async(req: IUserRequest, res: Response) => {
+  public loadCurrentUser = async(req: IUserRequest, res: Response) => {
     try {
       //Get the User repository
       const userRepository = getManager().getRepository(User);
-      console.log('Inside getCurrentUserProfile, request user id is: ', req.user.id) ;     
+      console.log('Inside getCurrentUserProfile, request user id is: ', req.user.generatedId) ;     
       //Find the user in the DB
-      const user = await userRepository.findOne(req.user.id);
+      const user = await userRepository.findOne(req.user.generatedId);
+      console.log('Inside getCurrentUserProfile, the user is: ', user) ;
+      delete user.password;
+      console.log('Inside getCurrentUserProfile, the user is: ', user) ;
       if(!user) {
         return res.status(400).json({ msg: 'This User does not exist' })
       }
