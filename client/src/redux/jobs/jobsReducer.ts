@@ -1,8 +1,9 @@
-import { GET_JOBS, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE, SAVE_JOB_TO_DASH } from './jobActionTypes';
+import { GET_JOBS, CHANGE_JOB_ORIGIN, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE, SAVE_JOB } from './jobActionTypes';
 import { JobAction, JobsState } from '../types/types';
 
 const initialState: JobsState = {
   jobs: [],
+  jobOrigin: '',
   backendMsg: "",
   jobDetail: null,
   loading: false,
@@ -10,8 +11,12 @@ const initialState: JobsState = {
 };
 
 const showDetails = (jobs: any, id: number | string) => {
-  let jobDetail =  jobs.find((item: any) => item.id === id);
-  return jobDetail;
+  try {
+    let jobDetail =  jobs.find((item: any) => item.id === id);
+    return jobDetail;
+  } catch (err) {
+    console.log(err.message)
+  }
 };
 
 const jobsReducer = (state: JobsState = initialState, action: JobAction) => {
@@ -22,6 +27,11 @@ const jobsReducer = (state: JobsState = initialState, action: JobAction) => {
       return {
         ...state,
         loading: true
+      };
+    case CHANGE_JOB_ORIGIN:
+      return {
+        ...state,
+        jobOrigin: payload
       };
     case GET_JOBS_SUCCESS:
       return {
@@ -50,6 +60,7 @@ const jobsReducer = (state: JobsState = initialState, action: JobAction) => {
         jobs: [],
         jobDetail: null,
         loading: false,
+        jobOrigin: '',
         hasErrors: false,
       };
     case SHOW_DETAILS:
@@ -58,7 +69,7 @@ const jobsReducer = (state: JobsState = initialState, action: JobAction) => {
         jobDetail: showDetails(state.jobs, payload)
       }
     /*CONTACT BACKEND TO SAVE JOB TO DATABASE*/
-    case SAVE_JOB_TO_DASH:
+    case SAVE_JOB:
       return {
         ...state,
         backendMsg: payload
