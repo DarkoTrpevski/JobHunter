@@ -90,13 +90,16 @@ export const loginUser = (email: string, password: string) => async(dispatch: an
 
   } catch (err) {
     console.log('Error message is: ', err);
-    const errors = err.response.data.errors;
-    if(errors) {
-      errors.forEach((error: any) => {
-        dispatch(setAlert(error.msg, 'danger'))
-      })
+    if(err.response !== undefined) {
+      const errors = err.response.data.errors;
+      if(errors) {
+        errors.forEach((error: any) => {
+          dispatch(setAlert(error.msg, 'danger'))
+        })
+      }
     }
     dispatch({ type: LOGIN_FAIL });
+    throw err;
   }
 };
 

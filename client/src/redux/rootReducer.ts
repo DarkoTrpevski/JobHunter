@@ -19,7 +19,5 @@ const rootReducer = combineReducers({
   uiReducer: uiReducer
 });
 
-// export default rootReducer;
-
 //Exporting modified rootReducer with persist capabilities
 export default persistReducer(persistConfig, rootReducer);

@@ -1,4 +1,4 @@
-interface IJob {
+export interface IJob {
   id: number;
   title: string;
   location: string;
@@ -13,13 +13,20 @@ export type AppState = {
   authReducer: UserState,
   uiReducer: UIState
 }
-
-export type JobsState = {
-  jobs: IJob[],
-  backendMsg: string,
-  jobDetail: object | null,
-  loading: boolean,
-  hasErrors: boolean
+//TREBA DA GI PRETVORAM SITE LOKALNI TYPES VO GLOBALNI, PRIMER(JobDetails.tsx, JobController.ts)
+interface JobType1 {
+  jobOrigin: string;
+  id: string;
+  type: string;
+  url: string;
+  created_at: string;
+  company: string;
+  company_url: string;
+  location: string;
+  title: string;
+  description: string;
+  how_to_apply: string;
+  company_logo: string;
 }
 export type JobType = {
   id: number;
@@ -29,6 +36,15 @@ export type JobType = {
   postedAt: string;
   description: string;
 }
+export type JobsState = {
+  jobs: JobType1[],
+  jobOrigin: string,
+  backendMsg: string,
+  jobDetail: JobType1 | null,
+  loading: boolean,
+  hasErrors: boolean
+}
+
 export type JobAction = {
   type: string
   payload?: any

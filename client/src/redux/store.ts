@@ -13,14 +13,3 @@ const store: Store = createStore(rootReducer, initialState, composedEnhancers);
 
 export const persistor = persistStore(store);
 export default store;
-
-
-// import thunk from "redux-thunk";
-// import reducer from "./reducer";
-// const store: Store<ArticleState, ArticleAction> & {dispatch: DispatchType} =
-// createStore(reducer, applyMiddleware(thunk))
-// export default store;
-// import { createStore, applyMiddleware } from 'redux';
-
-
-
