@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../../components/Header/Header'
 import { AppState } from '../../redux/types/types';
 
 interface LandingLayoutProps {
+  children: ReactNode,
   isAuthenticated: boolean
 }
 

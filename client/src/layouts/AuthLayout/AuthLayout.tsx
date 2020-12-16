@@ -1,12 +1,13 @@
 import { Flex, Box, Heading, Text, Stack, Button } from '@chakra-ui/core';
 import { Link, Redirect } from 'react-router-dom';
-import { Center } from '@chakra-ui/react';
-import React from 'react'
+// import { Center } from '@chakra-ui/react';
+import React, { ReactNode } from 'react'
 import './AuthLayout.css';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/types/types';
 
 interface AuthLayoutProps {
+  children: ReactNode,
   isAuthenticated: boolean
 }
 
@@ -27,7 +28,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({children, isAuthenticated}) => {
         "block", // 768px upwards
         "block", // 992px upwards
       ]} color = "#fff" width = "40%" height = "full" background = "linear-gradient(180deg, rgba(114,227,204,1) 0%, rgba(79,194,183,1) 100%)" >
-        <Center h = "full" flexDir = "column" >
+        <Flex h = "full" flexDir = "column" alignItems = "center" justifyContent = "center">
           <Heading textAlign = "start" alignSelf = "center" as = "h4" textTransform = "capitalize" fontSize = "3rem" minW = "200px">
             Job <span>Hunter</span>
           </Heading>
@@ -41,7 +42,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({children, isAuthenticated}) => {
               <Link to = "/register">SIGN UP</Link>
             </Button>
           </Stack>
-        </Center>
+        </Flex>
       </Box>
       <Box width = {[
         "100%", // base
@@ -49,11 +50,11 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({children, isAuthenticated}) => {
         "60%", // 768px upwards
         "60%", // 992px upwards
       ]} height = "full" >
-        <Center h = "full" flexDir = "column" >
+        <Flex h = "full" flexDir = "column" alignItems = "center" justifyContent = "center" >
           <Box bg = "blue" w="full">
             {children}
           </Box>
-        </Center>
+        </Flex>
       </Box>
     </Flex>
 
