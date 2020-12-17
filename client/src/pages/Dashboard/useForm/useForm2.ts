@@ -1,25 +1,26 @@
 import { useState } from "react";
 
 export const useFormFields = (initialState: any) => {
-  const [fields, setValues] = useState(initialState);
+  const [values, setValues] = useState(initialState);
 
   return [
-    fields,
+    values,
     (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
       const { type, name } = e.target;
       const getValue = () => {
-          if (type === 'checkbox') {
-            return (<HTMLInputElement>e.target).checked;
+        if (type === 'checkbox') {
+            return (e.target as HTMLInputElement).checked;
           }
-          else if (type === 'select-multiple') {
-            return Array.from((<HTMLSelectElement>e.target).selectedOptions).map(o => o.value);
+          else if (type === 'select-one') {
+            const selectedIndex = (e.target as HTMLSelectElement).options.selectedIndex;
+            return (e.target as HTMLSelectElement).options[selectedIndex].value
           }
           return e.target.value;
       }
       const value = getValue();
 
       setValues({
-        ...fields,
+        ...values,
         [name]: value
       });
     }

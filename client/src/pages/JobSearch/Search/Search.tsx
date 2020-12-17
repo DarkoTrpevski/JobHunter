@@ -2,39 +2,44 @@ import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Input, Select, Sta
 import React from 'react'
 import { connect } from 'react-redux';
 import { VARIANT_COLOR } from '../../../constants/constants';
+import { AppState } from '../../../redux/types/types';
 import { SearchState } from '../SearchContainer/SearchContainer';
 
 interface SearchProps {
   values: SearchState,
+  jobOrigin: string,
   changeSetValues: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  changeJobOrigin: (event: React.ChangeEvent<HTMLSelectElement>) => void,
   handleSubmit: (e: React.FormEvent) => void,
   handleClear: () => void,
   darkMode: boolean
 }
 
-const Search: React.FC<SearchProps> = ({ values, changeSetValues, handleSubmit, handleClear, darkMode }) => {
+const Search: React.FC<SearchProps> = ({ values, changeSetValues, jobOrigin, changeJobOrigin, handleSubmit, handleClear, darkMode }) => {
+
+  const { desc, loc, full } = values;
 
   const isQueryPresent = () => {
-    return values.desc || values.loc || values.full;
+    return desc || loc || full || jobOrigin;
   };
 
   return (
-    <Box w = "80%" m = "0 auto" textAlign = "left" my = {8}>
+    <Box w = "full" m = "0 auto" textAlign = "left" my = {8}>
       <form onSubmit = {handleSubmit}>
         <FormControl>
           <FormLabel color = {`${VARIANT_COLOR}.400`}>Job Title</FormLabel>
-          <Input name = "desc" value = {values.desc} onChange = {changeSetValues} focusBorderColor = "teal.200" variant = "flushed" type = "text" placeholder = "eg. React Developer" />
+          <Input name = "desc" value = {desc} onChange = {changeSetValues} focusBorderColor = "teal.200" variant = "flushed" type = "text" placeholder = "eg. React Developer" />
         </FormControl>
         <FormControl mt = {4}>
           <FormLabel color = {`${VARIANT_COLOR}.400`}>Location</FormLabel>
-          <Input name = "loc" value = {values.loc} onChange = {changeSetValues} focusBorderColor="teal.200" variant = "flushed" type = "text" placeholder = "eg. London" />
+          <Input name = "loc" value = {loc} onChange = {changeSetValues} focusBorderColor="teal.200" variant = "flushed" type = "text" placeholder = "eg. London" />
         </FormControl>
         <Stack mt = {5} flexDir = "row" justifyContent = "space-between">
-          <Checkbox color = {`${VARIANT_COLOR}.400`} name = "full" isChecked={values.full} onChange={changeSetValues}>
+          <Checkbox color = {`${VARIANT_COLOR}.400`} name = "full" isChecked={full} onChange={changeSetValues}>
             Full-Time
           </Checkbox>
           <Box w= "auto">
-            <Select placeholder="Select Website" bg = {`${!darkMode ? "#fff" : "gray.800"}`}>
+            <Select value = {jobOrigin} name = "jobOrigin" onChange = {changeJobOrigin} placeholder="Select Website" bg = {`${!darkMode ? "#fff" : "gray.800"}`}>
               <option value="github">GitHub</option>
             </Select>
           </Box>
@@ -48,8 +53,9 @@ const Search: React.FC<SearchProps> = ({ values, changeSetValues, handleSubmit, 
   );
 }
 
-const mapStateToProps = (state: any) => ({
-  darkMode: state.uiReducer.darkMode
+const mapStateToProps = (state: AppState) => ({
+  darkMode: state.uiReducer.darkMode,
+  jobOrigin: state.jobsReducer.jobOrigin
 })
 
 export default connect(mapStateToProps)(Search);

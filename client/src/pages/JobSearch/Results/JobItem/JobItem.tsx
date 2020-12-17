@@ -1,25 +1,45 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { Job } from "../../types";
-import { Box, Flex, Heading, Stack, Tag, TagIcon, TagLabel, Text } from "@chakra-ui/core";
-import { Center } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, Stack, Tag, TagIcon, TagLabel, Text } from "@chakra-ui/core";
 import { connect } from "react-redux";
+import { AppState } from "../../../../redux/types/types";
+import { saveJob } from '../../../../redux/jobs/jobsActions';
+
+interface JobType1 {
+  jobOrigin: string;
+  id: string;
+  type: string;
+  url: string;
+  created_at: string;
+  company: string;
+  company_url: string;
+  location: string;
+  title: string;
+  description: string;
+  how_to_apply: string;
+  company_logo: string;
+}
 
 interface JobItemProps {
-  job: Job,
+  job: JobType1,
+  jobOrigin: string,
+  saveJob: (job: JobType1, origin: string) => void,
   darkMode: boolean
 }
 
-const JobItem: React.FC<JobItemProps> = ({ job, darkMode }) => {
+const JobItem: React.FC<JobItemProps> = ({ job, jobOrigin, saveJob, darkMode }) => {
 
   let date = job && +new Date(job.created_at);
   
   return (
+    // ELEMENTOT NA HOVER DA DOBIE BORDER I MOZHEBI I RAZLICEN BACKGROUND
+    // ELEMENTOT NA HOVER DA DOBIE BORDER I MOZHEBI I RAZLICEN BACKGROUND
+    // ELEMENTOT NA HOVER DA DOBIE BORDER I MOZHEBI I RAZLICEN BACKGROUND
     <Flex className = "JobItem" width = "full" align = "center" justifyContent = "center" my = {10} boxShadow = {`0 0 5px ${!darkMode ? "#1A202C" : "#69eed3"}`} borderRadius = {10}>
       <Box w = "full" height = "full" >
         <Link to = { job && `/jobdetail/${job.id}` }>
-          <Center w = "full" h = "full" flexDir = "column" paddingY = {10} paddingX = {5} >
+          <Flex w = "full" h = "full" alignItems = "center" justifyContent = "space-between" flexDir = "column" paddingY = {10} paddingX = {5} >
             <Stack w = "full" flexDir = "row" justifyContent = "space-between" alignItems = "center">
               <Heading as = "h2" fontSize = "1.4rem" >
                 {job && job.title}
@@ -37,23 +57,27 @@ const JobItem: React.FC<JobItemProps> = ({ job, darkMode }) => {
               </Text>
             </Stack>
             <Stack w = "full" flexDir = "row" justifyContent = "space-between" alignItems = "center">
-              {/* <IconButton variant = "ghost" aria-label = "Save Job to Dashboard" icon = "add" size = "lg" /> */}
-              <Tag>
+              <IconButton onClick = {() => saveJob(job, jobOrigin)} variant = "ghost" aria-label = "Save Job to Dashboard" icon = "add" size = "lg" />
+              {/* <Tag>
                 <TagIcon aria-label = "Save Job to Dashboard" icon = "add" />
                 <TagLabel>Save Job</TagLabel>
-              </Tag>
+              </Tag> */}
             </Stack>
-          </Center>
+          </Flex>
         </Link>
       </Box>
   </Flex>
+  // ELEMENTOT NA HOVER DA DOBIE BORDER I MOZHEBI I RAZLICEN BACKGROUND
+  // ELEMENTOT NA HOVER DA DOBIE BORDER I MOZHEBI I RAZLICEN BACKGROUND
+  // ELEMENTOT NA HOVER DA DOBIE BORDER I MOZHEBI I RAZLICEN BACKGROUND
   );
 }
 
-const mapStateToProps = (state: any) => ({
-  darkMode: state.uiReducer.darkMode
+const mapStateToProps = (state: AppState) => ({
+  darkMode: state.uiReducer.darkMode,
+  jobOrigin: state.jobsReducer.jobOrigin
 })
 
 //Using this connector allows to circumvent the type errors resulting in Results.tsx, by using the classic connect() function
-const connector = connect(mapStateToProps);
+const connector = connect(mapStateToProps, { saveJob });
 export default connector(JobItem);

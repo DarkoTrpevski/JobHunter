@@ -1,9 +1,12 @@
-import { Box, FormControl, FormLabel, Input, Button } from '@chakra-ui/core';
-import { Text } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Input, Button, Text } from '@chakra-ui/core';
 import React from 'react'
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { VARIANT_COLOR } from '../../../constants/constants';
+import Alert from '../../../layouts/Alert/Alert';
+import { setAlert } from '../../../redux/alert/alertActions';
+import { loginUser } from '../../../redux/auth/authActions';
 
 
 interface LoginState {
@@ -11,9 +14,17 @@ interface LoginState {
   password: string
 }
 
-interface LoginFormProps {}
+interface LoginFormProps {
+  loginUser: (email:string, password:string) => void,
+}
 
-export const LoginForm: React.FC<LoginFormProps> = ({}) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ loginUser }) => {
+
+  const [values, setValues] = useState<LoginState>({
+    email: '',
+    password: ''
+  })
+  const { email, password } = values;
 
   const resetState = (): void => {
     setValues({
@@ -22,13 +33,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
     })
   }
 
-  const [values, setValues] = useState<LoginState>({
-    email: '',
-    password: ''
-  })
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const{ name, value } = e.target;
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -38,20 +43,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   const onLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Inside LoginForm, the values are: ', values);
+    // setAlert("Passwords do not match", 'danger')
+    loginUser(email, password);
     resetState();
   }
 
   return (
     <Box textAlign = "left" my = {8}>
+      <Alert />
       <form onSubmit = {onLogin}>
         <FormControl>
           <FormLabel color = {`${VARIANT_COLOR}.400`}>Email address</FormLabel>
-          <Input name = "email" value = {values.email} onChange = {onChange} focusBorderColor = "teal.200" variant = "flushed" type = "email" placeholder = "Enter your email address" />
+          <Input name = "email" value = {email} onChange = {onChange} focusBorderColor = "teal.200" variant = "flushed" type = "email" placeholder = "Enter your email address" />
         </FormControl>
         <FormControl mt = {4}>
           <FormLabel color = {`${VARIANT_COLOR}.400`}>Password</FormLabel>
-          <Input name = "password" value = {values.password} onChange = {onChange} focusBorderColor="teal.200" variant = "flushed" type = "password" placeholder = "Enter your password" />
+          <Input name = "password" value = {password} onChange = {onChange} focusBorderColor="teal.200" variant = "flushed" type = "password" placeholder = "Enter your password" />
         </FormControl>
         <Box color = {`${VARIANT_COLOR}.400`}>
           Don't have an account?
@@ -64,4 +71,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
     </Box>
   )
 }
-export default LoginForm;
+
+
+
+export default connect(null, { loginUser })(LoginForm);
