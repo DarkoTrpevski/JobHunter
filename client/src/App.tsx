@@ -67,7 +67,12 @@ const App: React.FC<AppProps> = ({ loadCurrentUser }) => {
               </MainLayout>
             </Route> 
 
-            <PrivateRoute path = {AuthRoutes.dashboard} Component = {Dashboard} />  
+            <Route path = {AuthRoutes.dashboard}>
+              <MainLayout>
+                <PrivateRoute path = {AuthRoutes.dashboard} Component = {Dashboard} />  
+              </MainLayout>
+            </Route> 
+
 
             <Route component={NotFound} />
             

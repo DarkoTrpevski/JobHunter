@@ -15,7 +15,8 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ Component, exact = false, p
     <Route
       exact={exact}
       path={path}
-      render={(props: RouteComponentProps) => !isAuthenticated && !loading ? (< Redirect to="/login" />) : (<Component {...props} />)} />
+      render={(props: RouteComponentProps) => !isAuthenticated && !loading ? (< Redirect to="/login" />) : (<Component {...props} />)} 
+      />
   )
 }
 

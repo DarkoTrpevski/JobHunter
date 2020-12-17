@@ -1,5 +1,7 @@
-import { ITheme, theme } from "@chakra-ui/core"
- 
+import { ITheme, theme } from "@chakra-ui/core";
+import { breakpoints } from './breakpoints';
+
+
 export const customTheme = {
   ...theme,
   mode: {
@@ -36,19 +38,21 @@ export const customTheme = {
       900: "#080FC7",
     },
   },
+  breakpoints: breakpoints
   // breakpoints: ["0em", "30em", "48em", "62em", "80em"]
 }
 
 export const resetConfig = (theme: ITheme) => ({
   light: {
     color: theme.colors.gray[700],
-    bg: theme.colors.red[500],
+    bg: theme.colors.gray[200],
     borderColor: theme.colors.gray[200],
     placeholderColor: theme.colors.gray[500]
   },
   dark: {
     color: theme.colors.whiteAlpha[900],
-    bg: theme.colors.gray[800],
+    // bg: theme.colors.gray[800],
+    bg: "#111216",
     borderColor: theme.colors.whiteAlpha[300],
     placeholderColor: theme.colors.whiteAlpha[400]
   }

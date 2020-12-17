@@ -12,7 +12,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <>
       <Header isLandingPage = {false} />
-      <Flex w = {mainLayoutStyle.width} m = {mainLayoutStyle.margin} justifyContent = "center" alignItems = "start" className = "MainLayout">
+      <Flex w = {mainLayoutStyle.width} m = {mainLayoutStyle.margin} py={10} justifyContent = "center" alignItems = "start" className = "MainLayout">
         <Flex w = "full" m = {mainLayoutInnerWrapperStyle.margin} flexDir = "column" alignItems = "center" justifyContent = "center">
           {children}
         </Flex>

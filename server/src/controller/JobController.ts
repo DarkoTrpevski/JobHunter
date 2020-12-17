@@ -34,7 +34,7 @@ export class JobController {
       //Create Job repository
       const jobRepository = getManager().getRepository(Job);
   
-      //Get the user id from the middleware, and the user from the repository
+      //Get the the user from the repository using the user id from the middleware
       const user = await userRepository.findOne(req.user);
       
       //Create a new Job Entity Object

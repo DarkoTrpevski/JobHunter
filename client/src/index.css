@@ -15,6 +15,10 @@ ul, li {
   font-weight: 400;
 }
 
+a, a:hover {
+  text-decoration: none;
+}
+
 @font-face {
   font-family: 'HelveticaThin';
   src:  url('./fonts/HelveticaThin.woff') format('woff');
