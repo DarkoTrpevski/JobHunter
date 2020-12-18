@@ -81,21 +81,22 @@ export const fetchMoreJobs = (description: string = '', location: string = '', f
 }
 
 interface JobType1 {
-  jobOrigin: string;
-  id: string;
-  type: string;
-  url: string;
-  created_at: string;
+  id?: string;
+  jobOrigin?: string;
+  created_at?: string;
+  description?: string;
+  how_to_apply?: string;
+  company_url?: string;
+  company_logo?: string;
+  type?: string;
+  url?: string;
   company: string;
-  company_url: string;
   location: string;
   title: string;
-  description: string;
-  how_to_apply: string;
-  company_logo: string;
 }
 
-export const saveJob = (job: JobType1, origin: string) => async(dispatch: DispatchJobType) => {
+
+export const saveJob = (job: JobType1, origin?: string) => async(dispatch: DispatchJobType) => {
   try {
     console.log('Inside jobsActions saveJobToDash, job is:', job);
     /*CONTACT BACKEND TO SAVE JOB TO DATABASE*/
@@ -108,13 +109,10 @@ export const saveJob = (job: JobType1, origin: string) => async(dispatch: Dispat
     }
   
     console.log('Inside saveJob, job before stringify: ', job);
-    //TREBA VO SEARCH CONTAINER DA MENJAM JOB ORIGIN STATE
-    //TREBA VO SEARCH CONTAINER DA MENJAM JOB ORIGIN STATE
-    //TREBA VO SEARCH CONTAINER DA MENJAM JOB ORIGIN STATE
     job.jobOrigin = origin;
     console.log('Inside saveJob, after origin added: ', job);
-    // const body = JSON.stringify(job);
-    // console.log('Inside saveJob, job body after stringify: ', body)
+    const body = JSON.stringify(job);
+    console.log('Inside saveJob, job body after stringify: ', body)
     const res = await axios.post(URL, job, config);
     console.log('Inside saveJob, response data is: ', res.data);  
 

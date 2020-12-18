@@ -139,7 +139,7 @@ export class AuthController {
       const validPassword = await bcrypt.compare(password, foundUser.password);
       if(!validPassword) {
         return res.status(400).json({ errors: [{ msg: 'Invalid credentials' }] });
-      }  
+      }
       //Generate
       const jwtToken = jwtGenerator(foundUser.generatedId);
       //Return a JWT

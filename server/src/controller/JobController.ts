@@ -5,28 +5,29 @@ import { User } from "../entity/User";
 import { IUserRequest } from "../types/IUserRequest";
 
 interface JobType {
-  jobOrigin: string;
-  id: string;
-  type: string;
-  url: string;
-  created_at: string;
+  id?: string;
+  jobOrigin?: string;
+  created_at?: string;
+  description?: string;
+  how_to_apply?: string;
+  company_url?: string;
+  company_logo?: string;
+  type?: string;
+  url?: string;
   company: string;
-  company_url: string;
   location: string;
   title: string;
-  description: string;
-  how_to_apply: string;
-  company_logo: string;
 }
 
 export class JobController {
 
   constructor(){}
 
-  public saveJob = async(req: IUserRequest, res: Response) => {
-
+  public saveJob = async(req: any, res: Response) => {
+    const { jobOrigin, id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo }: JobType = req.body;
+    console.log('Inside saveJob, the request user generatedId is : ', req.user.generatedId)
+    console.log('Inside saveJob, the request user id is : ', req.user.id)
     try {
-      const { jobOrigin, id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo }: JobType = req.body;
       // const { title, location, companyName, postedAt, jobOrigin, description } = req.body;
   
       //Create User repository
@@ -35,7 +36,7 @@ export class JobController {
       const jobRepository = getManager().getRepository(Job);
   
       //Get the the user from the repository using the user id from the middleware
-      const user = await userRepository.findOne(req.user);
+      const user = await userRepository.findOne(req.user.id);
       
       //Create a new Job Entity Object
       const job = jobRepository.create();
@@ -44,6 +45,7 @@ export class JobController {
       //Job-User Relation
       job.user = user;
 
+      
       job.id = id;
       job.type = type;
       job.url = url;
