@@ -10,4 +10,6 @@ export const SHOW_DETAILS = 'SHOW_DETAILS';
 export const LOAD_MORE_JOBS_SUCCESS = 'LOAD_MORE_JOBS_SUCCESS';
 export const LOAD_MORE_JOBS_FAILURE = 'LOAD_MORE_JOBS_FAILURE';
 
+export const EDIT_JOB = 'EDIT_JOB';
 export const SAVE_JOB = 'SAVE_JOB';
+export const GET_SAVED_JOBS = 'GET_SAVED_JOBS';

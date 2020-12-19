@@ -5,6 +5,7 @@ export const useFormFields = (initialState: any) => {
 
   return [
     values,
+    setValues,
     (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
       const { type, name } = e.target;
       const getValue = () => {

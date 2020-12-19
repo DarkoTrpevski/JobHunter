@@ -38,9 +38,11 @@ export type JobType = {
 }
 export type JobsState = {
   jobs: JobType1[],
+  savedJobs: JobType1[],
   jobOrigin: string,
   backendMsg: string,
   jobDetail: JobType1 | null,
+  jobEdit: JobType1 | null,
   loading: boolean,
   hasErrors: boolean
 }
