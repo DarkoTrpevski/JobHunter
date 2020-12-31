@@ -2,22 +2,8 @@ import { Response } from "express";
 import { getManager } from "typeorm";
 import { Job } from "../entity/Job";
 import { User } from "../entity/User";
-import { IUserRequest } from "../types/IUserRequest";
+import { JobType, IUserRequest } from "../types/types";
 
-interface JobType {
-  id?: string;
-  jobOrigin?: string;
-  created_at?: string;
-  description?: string;
-  how_to_apply?: string;
-  company_url?: string;
-  company_logo?: string;
-  type?: string;
-  url?: string;
-  company: string;
-  location: string;
-  title: string;
-}
 
 export class JobController {
 
@@ -28,7 +14,6 @@ export class JobController {
     console.log('Inside saveJob, the request user generatedId is : ', req.user.generatedId)
     console.log('Inside saveJob, the request user id is : ', req.user.id)
     try {
-      // const { title, location, companyName, postedAt, jobOrigin, description } = req.body;
   
       //Create User repository
       const userRepository = getManager().getRepository(User);
@@ -40,36 +25,88 @@ export class JobController {
       
       //Create a new Job Entity Object
       const job = jobRepository.create();
-      job.jobOrigin = jobOrigin;
 
       //Job-User Relation
       job.user = user;
-
       
       job.id = id;
-      job.type = type;
-      job.url = url;
+      job.origin = jobOrigin;
       job.created_at = created_at;
-      job.company = company;
-      job.company_url = company_url;
-      job.location = location;
-      job.title = title;
       job.description = description;
       job.how_to_apply = how_to_apply;
+      job.company_url = company_url;
       job.company_logo = company_logo;
-      // job.title = title;
-      // job.location = location;
-      // job.company = company;
-      // job.created_at = created_at;
-      // job.jobOrigin = jobOrigin;
-      // job.description = description;
-      // job.user = user;
+      job.type = type;
+      job.url = url;
+      job.company = company;
+      job.location = location;
+      job.title = title;
   
       //Save Job in DB
       await jobRepository.save(job);
 
       //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
       res.json(job);
+      //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
+
+
+      // res.json({message: "Successfully Saved."})
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send("Server Error");
+    }
+  
+  }
+  public editJob = async(req: any, res: Response) => {
+
+    const { generatedId, jobOrigin, applicationStatus, note,  id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo }: JobType = req.body;
+    /*
+      *STEPS FOR EDITING JOB(NOT-SURE)
+      *1)GET THE GENERATED ID FROM JOB.
+      *2)GRAB THE JOB FROM THE JOB REPO USING THE ID.
+      *3)EITHER OVERWRITE THE OLD JOB WITH NEW JOB AS A WHOLE, OR USE THE PROPERTIES OF THE NEW JOB TO REPLACE THE ONE FROM THE OLD JOB.
+      *4)SAVE THE JOB BACK
+    */
+    console.log('Inside editJob, the request body is: ', req.body)
+    console.log('Inside editJob, the request body generatedId is : ', generatedId)
+    console.log('Inside editJob, the applicationStatus is : ', applicationStatus)
+    console.log('Inside editJob, the note is : ', note)
+    try {
+      //Create Job repository
+      const jobRepository = getManager().getRepository(Job);
+      const foundJob = await jobRepository.findOne({ where: {generatedId: generatedId} })
+      // const foundJob = await jobRepository.findOne({ generatedId: generatedId })
+
+      foundJob.generatedId = generatedId
+      foundJob.id = id;
+      foundJob.origin = jobOrigin;
+
+      //TUKA TREBA DA GI PROVERAM VREDNOSTITE NA OVIE(applicationStatus, note)
+      //TUKA TREBA DA GI PROVERAM VREDNOSTITE NA OVIE(applicationStatus, note)
+      //TUKA TREBA DA GI PROVERAM VREDNOSTITE NA OVIE(applicationStatus, note)
+      foundJob.applicationStatus = applicationStatus;
+      foundJob.note = note;
+      //TUKA TREBA DA GI PROVERAM VREDNOSTITE NA OVIE(applicationStatus, note)
+      //TUKA TREBA DA GI PROVERAM VREDNOSTITE NA OVIE(applicationStatus, note)
+      //TUKA TREBA DA GI PROVERAM VREDNOSTITE NA OVIE(applicationStatus, note)
+
+      foundJob.created_at = created_at;
+      foundJob.description = description;
+      foundJob.how_to_apply = how_to_apply;
+      foundJob.company_url = company_url;
+      foundJob.company_logo = company_logo;
+      foundJob.type = type;
+      foundJob.url = url;
+      foundJob.company = company;
+      foundJob.location = location;
+      foundJob.title = title;
+  
+      // //Save Job in DB
+      // await jobRepository.save(job);
+      await jobRepository.update({ generatedId: generatedId }, foundJob)
+
+      //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
+      res.json(foundJob);
       //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
 
 

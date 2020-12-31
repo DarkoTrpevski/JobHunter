@@ -2,7 +2,6 @@ import * as express from "express";
 import { validInfoMiddleware } from "../middleware/validInfoMiddleware";
 import { authMiddleware } from "../middleware/authMiddleware";
 import { AuthController } from "../controller/AuthController";
-
 import { check } from 'express-validator';
 
 

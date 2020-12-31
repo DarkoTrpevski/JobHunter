@@ -4,7 +4,7 @@ import { getManager } from "typeorm";
 import { User } from "../entity/User";
 import jwtGenerator from "../utils/jwtGenerator";
 import { validationResult } from 'express-validator';
-import { IUserRequest } from "../types/IUserRequest";
+import { IUserRequest } from "../types/types";
 
 export class AuthController {
 
@@ -49,7 +49,7 @@ export class AuthController {
   //   }
   
   // }
-  public registerUser = async(req: Request, res: Response) => {
+  public registerUser = async(req: IUserRequest, res: Response) => {
     try {
       const{ name, email, password } = req.body;
       const errors = validationResult(req);
@@ -123,7 +123,7 @@ export class AuthController {
   //     res.status(500).send("Server error");
   //   }
   // }
-  public loginUser = async(req: Request, res: Response) => {
+  public loginUser = async(req: IUserRequest, res: Response) => {
     try {  
       const{ email, password } = req.body;
   

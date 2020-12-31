@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { getManager } from "typeorm";
 import { User } from "../entity/User";
-import { IUserRequest } from "../types/IUserRequest";
+import { IUserRequest } from "../types/types";
 
 export class DashboardController {
 
