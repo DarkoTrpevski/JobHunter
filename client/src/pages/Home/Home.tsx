@@ -1,70 +1,40 @@
-import { Box, Button, Flex, Heading, IconButton, Stack, Text } from '@chakra-ui/core';
-import { PhoneIcon, AddIcon, WarningIcon } from '@chakra-ui/icons';
+import { Box, Flex, Heading, Stack, Image } from '@chakra-ui/core';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { AppState } from '../../redux/types/types';
+import HomeBg from '../../assets/homebg1.svg';
 import './Home.css';
 
-interface HomeProps {}
-const Home: React.FC<HomeProps> = () => {
+interface HomeProps {
+  darkMode: boolean
+}
+
+const Home: React.FC<HomeProps> = ({ }) => {
+  
   return (
-    <Box className = "Home" width = "full" >
+    <Stack w={["100%", "100%" , "90%"]} h="full" minH="100vh" mx="auto" as ="section" align="center" justify="center" pt={20} className = "Home" >
 
-      <Stack as ="section" mx = "auto" className = "Home-jumbotron" align = "center" justifyContent = "center" color = "#fff" >
-        <Box w = "full" fontFamily = "HelveticaLight">
-          <Flex alignItems = "center" justifyContent="center" flexDir="column" className = "home-title">
-            <Heading fontFamily = "HelveticaLight" color = "#fff">JOIN NOW!</Heading>
-            <Heading fontFamily = "HelveticaLight" color = "#fff">FIND YOUR DREAM JOB.</Heading>
-          </Flex>
-          <Flex alignItems = "center" justifyContent="center" flexDir="column" mt={3} className = "home-body">
-            <Text fontFamily = "HelveticaLight">Find your dream job within seconds.</Text>
-            <Text fontFamily = "HelveticaLight">Monitor your job progress with a simple click.</Text>
-          </Flex>
-        </Box>
-        <Box mt={10}  w = "50%" mx = "auto" >
-          <Stack>
-            <Flex alignItems = "center" justifyContent="space-evenly" >
-              <Link className = "home-action-link" to ="/login" >Sign In</Link>
-              <Link className = "home-action-link" to ="/search" >Search jobs</Link>
-            </Flex>
-          </Stack>
-        </Box>
-      </Stack>
+      <Flex w="full" align="flex-start">
+        <Heading>We make hiring exceptional talent simple</Heading>
+      </Flex>
 
-      <Stack py={50} as ="section" className = "Home-info" align = "center" justifyContent = "center" >
-        <Box>
-          <Heading fontFamily = "HelveticaLight">Find work in 100+ countries</Heading>
-          <Text fontFamily = "HelveticaLight">Delivering the best experience for managing your job progression.</Text>
-          <Text fontFamily = "HelveticaLight">Created to make applying to and managing of jobs easier.</Text>
-        </Box>
-        <Flex w = "50%" mx ="auto">
+      <Flex w="full" flexDir={["column-reverse", "column-reverse", "row", "row"]}   p={["2", "4", "6", "8"]} justify="space-between">
 
-          <Box w="50%" maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" boxShadow = "0 0 2px #69EED3" >
+        <Stack w={["100%", "100%", "100%", "50%"]} className="blocks" mt={5}>
+          <Box w={["100%", "100%", "100%", "100%"]} h={["auto", "auto", "auto", "auto", ]} minH={["360px", "360px", "300px", "300px"]} className="block1" bg="rgba(255, 0, 0, 0.5)"></Box>
+          <Box w={["100%", "100%", "100%", "100%"]} h={["auto", "auto", "auto", "auto", ]} minH={["360px", "360px", "300px", "300px"]} className="block2" bg="rgba(255, 255, 0, 0.5)"></Box>
+        </Stack>
 
-            <Box p={6}>
-              <Box d="flex" alignItems="baseline">
-              </Box>
+        <Image w={["100%", "100%", "100%", "50%"]} objectFit="fill" src={HomeBg} className="image" mt={5} />
 
-              <Heading as = "h4" mt="1">
-                TITLE
-              </Heading>
-
-              <Box>
-                PRICE
-              </Box>
-
-              <Box>
-                <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                  REVIEW COUNT
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-
-        </Flex>
-      </Stack>
-      
-    </Box>
+      </Flex>  
+          
+    </Stack>
   );
 }
 
-export default Home;
+const mapState = (state: AppState) => ({
+  darkMode: state.uiReducer.darkMode
+})
+
+export default connect(mapState)(Home);
