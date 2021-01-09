@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Heading, Image, Link, Stack, Text } from '@chakra-ui/core';
+import { JobType1 } from '../../redux/types/types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { showDetails } from '../../redux/jobs/jobsActions';
@@ -6,25 +7,10 @@ import { stripHtmlTags } from '../../utils/stripHtmlTags';
 import parse from 'html-react-parser';
 import { AppState } from '../../redux/types/types';
 
-//MORA DA GI STAVAM POVEKJETO (JobType OBJECTS) VO 1 FAJL
-interface JobType {
-  jobOrigin: string;
-  id: string;
-  type: string;
-  url: string;
-  created_at: string;
-  company: string;
-  company_url: string;
-  location: string;
-  title: string;
-  description: string;
-  how_to_apply: string;
-  company_logo: string;
-}
 
 interface JobDetailsProps {
   darkMode: boolean,
-  jobDetail: JobType | null,
+  jobDetail: JobType1 | null,
   showDetails: (id: number | string) => void,
   match: any
 }
@@ -56,7 +42,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ darkMode, jobDetail, showDetail
         </Box>
         <Box w = "full" className = "company-apply" mt = {5}>
           <Button w = "full" p = {5} borderRadius = {10} border = {`2px solid ${darkMode ? "" : ""}`} variant = "solid">
-            <Link _hover = {{textDecor: 'none'}} target = "blank" href = {stripHtmlTags(jobDetail.how_to_apply)}>APPLY</Link>
+            <Link _hover = {{textDecor: 'none'}} target = "blank" href = {jobDetail.how_to_apply && stripHtmlTags(jobDetail.how_to_apply)}>APPLY</Link>
           </Button>
         </Box>
       </Stack>
@@ -65,7 +51,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ darkMode, jobDetail, showDetail
           <Heading fontSize = {32} lineHeight = {1.5} fontFamily = "HelveticaLight" as="h2">JOB SUMMARY</Heading>
           <Heading fontSize = {22} lineHeight = {1.5} fontFamily = "HelveticaLight" as="h4">{jobDetail.title}</Heading>
           <Box>
-            {parse(jobDetail.description)}
+            {jobDetail.description && parse(jobDetail.description)}
           </Box>
         </Box>
       </Stack>
