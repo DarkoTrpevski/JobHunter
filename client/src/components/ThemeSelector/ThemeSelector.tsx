@@ -1,6 +1,7 @@
 import { useColorMode, Box, IconButton } from '@chakra-ui/core';
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
+import { AppState } from '../../redux/types/types';
 import { setDarkMode } from '../../redux/ui/uiActions';
 
 interface ThemeSelectorProps {
@@ -18,7 +19,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({ darkMode, setDarkMode }) 
     } else if(colorMode === 'light' && darkMode === true) {
       setDarkMode(false);
     }
-  }, [])
+  }, [darkMode, setDarkMode, colorMode])
 
   //Toggle the 2 dark mode states(chakra ui and redux one)
   const toggleDarkMode = (): void => {
@@ -32,13 +33,13 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({ darkMode, setDarkMode }) 
   }
 
   return (
-    <Box ml = {3}>
+    <Box>
       <IconButton _hover = {{background: 'transparent'}} variant = "ghost" icon={colorMode === 'light' ? "moon" : "sun"} aria-label={colorMode === 'light' ? "Moon Icon" : "Sun Icon"} onClick={toggleDarkMode} />
     </Box>
   )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: AppState) => ({
   darkMode: state.uiReducer.darkMode
 })
 
