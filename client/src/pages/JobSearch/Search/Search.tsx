@@ -3,7 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { VARIANT_COLOR } from '../../../constants/constants';
 import { AppState } from '../../../redux/types/types';
-import { SearchState } from '../SearchContainer/SearchContainer';
+
+interface SearchState {
+  desc: string,
+  loc: string,
+  full: boolean,
+  pageNum: number,
+}
 
 interface SearchProps {
   values: SearchState,
@@ -35,11 +41,11 @@ const Search: React.FC<SearchProps> = ({ values, changeSetValues, jobOrigin, cha
           <Input name = "loc" value = {loc} onChange = {changeSetValues} focusBorderColor="teal.200" variant = "flushed" type = "text" placeholder = "eg. London" />
         </FormControl>
         <Stack mt = {5} flexDir = "row" justifyContent = "space-between">
-          <Checkbox color = {`${VARIANT_COLOR}.400`} name = "full" isChecked={full} onChange={changeSetValues}>
+          <Checkbox name = "full" color = {`${VARIANT_COLOR}.400`} isChecked={full} onChange={changeSetValues}>
             Full-Time
           </Checkbox>
           <Box w= "auto">
-            <Select value = {jobOrigin} name = "jobOrigin" onChange = {changeJobOrigin} placeholder="Select Website" bg = {`${!darkMode ? "#fff" : "gray.800"}`}>
+            <Select name = "jobOrigin" value = {jobOrigin} onChange = {changeJobOrigin} placeholder="Select Website" bg = {`${!darkMode ? "#fff" : "gray.800"}`}>
               <option value="github">GitHub</option>
             </Select>
           </Box>

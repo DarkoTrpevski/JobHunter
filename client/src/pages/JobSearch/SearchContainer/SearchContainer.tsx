@@ -1,31 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { connect } from 'react-redux';
 import LoadMore from "../LoadMore/LoadMore";
 import { changeJobOrigin, clearJobs, fetchJobs, fetchMoreJobs } from '../../../redux/jobs/jobsActions';
 import Search from '../Search/Search';
-import { AppState } from "../../../redux/types/types";
+import { AppState, JobType1 } from "../../../redux/types/types";
+import useForm from "../../../hooks/useForm";
 
-export interface SearchState {
-  desc: string,
-  loc: string,
-  full: boolean,
-  pageNum: number,
-}
-
-interface JobType1 {
-  jobOrigin: string;
-  id: string;
-  type: string;
-  url: string;
-  created_at: string;
-  company: string;
-  company_url: string;
-  location: string;
-  title: string;
-  description: string;
-  how_to_apply: string;
-  company_logo: string;
-}
 
 interface SearchContainerProps {
   jobs: JobType1[],
@@ -37,35 +17,37 @@ interface SearchContainerProps {
   fetchMoreJobs: (desc: string, loc: string, full: boolean, pageNum: number, jobOrigin: string) => void
 }
 
+const initialValues = {
+  desc: '',
+  loc: '',
+  full: false,
+  pageNum: 1,
+}
+
 const SearchContainer: React.FC<SearchContainerProps> = ({ children, jobs, loading, jobOrigin, changeJobOrigin, clearJobs, fetchJobs, fetchMoreJobs }) => {
 
-
-  const [values, setValues] = useState<SearchState>({
-    desc: '',
-    loc: '',
-    full: false,
-    pageNum: 1,
-  })
-
-
-  const changeSetValues = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if(name === "full"){
-      setValues({
-        ...values,
-        full: !values.full
-      });
-    } else {
-      setValues({
-        ...values,
-        [name]: value
-      });
-    }
+  const resetState = (): void => {
+    //Clear Job State
+    clearJobs();
+    //Clear Form State
+    setValues(initialValues)
   }
+
+  const [values, setValues, handleChange] = useForm(initialValues);
+
   const onJobOriginChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     changeJobOrigin(e.target.value)
   }
+
+  const handleClear = () => {
+    resetState();
+  }
   
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchJobs(values.desc, values.loc, values.full, jobOrigin);
+    // resetState();
+  }
 
   const loadMoreJobs = () => {
     setValues({
@@ -75,32 +57,9 @@ const SearchContainer: React.FC<SearchContainerProps> = ({ children, jobs, loadi
     fetchMoreJobs(values.desc, values.loc, values.full, values.pageNum, jobOrigin);
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchJobs(values.desc, values.loc, values.full, jobOrigin);
-    resetState();
-  }
-
-  const handleClear = () => {
-    resetState();
-  }
-
-  
-  const resetState = (): void => {
-    //Clear Job State
-    clearJobs();
-    setValues({
-      desc: '',
-      loc: '',
-      full: false,
-      pageNum: 1,
-    })
-  }
-
-
   return (
     <div className = "SearchContainer">
-      <Search values = {values} changeSetValues = {changeSetValues} changeJobOrigin = {onJobOriginChange} handleSubmit = {handleSubmit} handleClear = {handleClear} />
+      <Search values = {values} changeSetValues = {handleChange} changeJobOrigin = {onJobOriginChange} handleSubmit = {handleSubmit} handleClear = {handleClear} />
       {children}
       <LoadMore jobs = {jobs} loading = {loading} loadMoreJobs = {loadMoreJobs} />
     </div>
