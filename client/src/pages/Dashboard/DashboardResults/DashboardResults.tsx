@@ -10,7 +10,7 @@ interface DashboardResultsProps {
 const DashboardResults: React.FC<DashboardResultsProps> = ({ savedJobs }) => {
   return (
   <>
-    {savedJobs !== undefined && savedJobs.length > 0
+    {savedJobs && savedJobs.length > 0
     ? savedJobs.map((savedJob: JobType1, idx: number) => (
         <SavedJobItem key={idx} savedJob = {savedJob} />
       ))

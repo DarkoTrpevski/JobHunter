@@ -2,7 +2,7 @@ import { Box, Heading, FormControl, FormLabel, Input, Textarea, Stack, Checkbox,
 import React from 'react'
 import { connect } from 'react-redux';
 import { VARIANT_COLOR } from '../../../constants/constants';
-import { AppState } from '../../../redux/types/types';
+import { AppState, JobType1 } from '../../../redux/types/types';
 import { dashboardAddJobStyle } from '../styles';
 import useForm from '../../../hooks/useForm';
 import { saveJob } from '../../../redux/jobs/jobsActions';
@@ -20,23 +20,6 @@ const initialValues = {
   jobLocation: "",
   jobUrl: "",
   jobType: false,
-}
-
-interface JobType1 {
-  id?: string;
-  jobOrigin?: string;
-  applicationStatus?: string;
-  note?: string;
-  created_at?: string;
-  description?: string;
-  how_to_apply?: string;
-  company_url?: string;
-  company_logo?: string;
-  type?: string;
-  url?: string;
-  company: string;
-  location: string;
-  title: string;
 }
 
 const AddJob: React.FC<AddJobFormProps> = ({ saveJob, darkMode }) => {
@@ -59,14 +42,19 @@ const AddJob: React.FC<AddJobFormProps> = ({ saveJob, darkMode }) => {
 		e.preventDefault();
     console.log(values);
     try {
+      const date = new Date().toString();
+      console.log('Inside Add Job, date is: ', date);
       const job: JobType1 = {
         company: values.jobCompany,
+        created_at: date,
         title: values.jobTitle,
         description: values.jobDescription,
         location: values.jobLocation,
         type: values.jobType === true ? "Full Time" : "Part Time",
         url: values.jobUrl,
       }
+      console.log('Inside Add Job, job is: ', job);
+
       saveJob(job)
       resetState();
     } catch (err) {

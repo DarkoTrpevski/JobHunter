@@ -1,30 +1,13 @@
+import React, { useEffect, FormEvent } from 'react';
 import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Heading, Input, Select, Stack, Textarea } from '@chakra-ui/core';
-import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { VARIANT_COLOR } from '../../../constants/constants';
-import { AppState } from '../../../redux/types/types';
+import { AppState, JobType1 } from '../../../redux/types/types';
 import { dashboardAddJobStyle } from '../styles';
-import { useFormFields } from '../useForm/useForm2';
 import { editJob } from '../../../redux/jobs/jobsActions';
 import useForm from '../../../hooks/useForm';
 
 
-interface JobType1 {
-  id?: string;
-  jobOrigin?: string;
-  applicationStatus?: string;
-  note?: string;
-  created_at?: string;
-  description?: string;
-  how_to_apply?: string;
-  company_url?: string;
-  company_logo?: string;
-  type?: string;
-  url?: string;
-  company: string;
-  location: string;
-  title: string;
-}
 
 interface EditJobFormProps {
   darkMode: boolean,
@@ -65,10 +48,11 @@ const EditJob: React.FC<EditJobFormProps> = ({ darkMode, editJob, jobEdit }) => 
   }
 
 
-  const editCustomJob = (e: React.FormEvent) => {
+  const editCustomJob = (e: FormEvent) => {
 		e.preventDefault();
     try {
       const job: JobType1 = {
+        generatedId: jobEdit?.generatedId,
         company: values.company,
         title: values.title,
         description: values.description,
@@ -76,10 +60,9 @@ const EditJob: React.FC<EditJobFormProps> = ({ darkMode, editJob, jobEdit }) => 
         type: values.type === true ? "Full Time" : "Part Time",
         applicationStatus: values.applicationStatus,
         note: values.note,
-        // url: values.jobUrl,
+        url: values.jobUrl,
       }
       console.log('Inside EditJobForm, editCustomJob, the editted job is: ', job);
-      //UPDATE JOB, INSTEAD OF SAVING(FIND JOB BY GENERATED ID AND REPLACE STUFF)
       editJob(job)
       resetState();
     } catch (err) {
@@ -97,7 +80,7 @@ const EditJob: React.FC<EditJobFormProps> = ({ darkMode, editJob, jobEdit }) => 
   
 
   return (
-    <Box mt = {10} h = "full" className = "Dashboard-edit-job" bg = {`${darkMode ? "#17191e" : "#fff"}`} p = {dashboardAddJobStyle.padding} borderRadius = {20} >
+    <Box mt = {10} w = "full" h = "full" className = "Dashboard-edit-job" bg = {`${darkMode ? "#17191e" : "#fff"}`} p = {dashboardAddJobStyle.padding} borderRadius = {20} >
       <form onSubmit={editCustomJob}>
         <Heading as="h5">Edit job </Heading>
         <FormControl>
@@ -140,7 +123,7 @@ const EditJob: React.FC<EditJobFormProps> = ({ darkMode, editJob, jobEdit }) => 
           {/* OVA TREBA DA GO SMENAM(DA DODADAM JOB APPLICATION STATUS VO TYPES) */}
           <FormControl>
             <FormLabel color = {`${VARIANT_COLOR}.400`}>Job Notes</FormLabel>
-            <Textarea p = {2} name = "jobNote" value={values.jobNote || ""} onChange={handleChange} placeholder="Add notes about the job progress" size="md" spellCheck="false"  focusBorderColor="teal.200"/>
+            <Textarea p = {2} name = "note" value={values.note || ""} onChange={handleChange} placeholder="Add notes about the job progress" size="md" spellCheck="false"  focusBorderColor="teal.200"/>
           </FormControl>
         </Stack>
         <Flex justifyContent={["start", "center"]}>

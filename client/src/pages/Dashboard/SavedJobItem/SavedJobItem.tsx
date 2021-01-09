@@ -1,32 +1,17 @@
-import { Box, Flex, Heading, Stack, Text, Link } from '@chakra-ui/core';
+import { Box, Flex, Heading, Stack, Text } from '@chakra-ui/core';
 import moment from "moment";
 import React from 'react'
 import { connect } from 'react-redux';
-import { AppState } from '../../../redux/types/types';
-import { editJob } from '../../../redux/jobs/jobsActions';
-
-interface JobType1 {
-  id?: string;
-  jobOrigin?: string;
-  created_at?: string;
-  description?: string;
-  how_to_apply?: string;
-  company_url?: string;
-  company_logo?: string;
-  type?: string;
-  url?: string;
-  company: string;
-  location: string;
-  title: string;
-}
+import { AppState, JobType1 } from '../../../redux/types/types';
+import { showEditJob } from '../../../redux/jobs/jobsActions';
 
 interface SavedJobItemProps {
   darkMode: boolean,
-  editJob: (job: JobType1) => void,
-  savedJob: JobType1
+  showEditJob: (job: JobType1) => void,
+  savedJob: any
 }
 
-const SavedJobItem: React.FC<SavedJobItemProps> = ({ darkMode, savedJob, editJob }) => {
+const SavedJobItem: React.FC<SavedJobItemProps> = ({ savedJob, darkMode, showEditJob }) => {
 
   let date;
   if(savedJob && savedJob.created_at) {
@@ -34,7 +19,8 @@ const SavedJobItem: React.FC<SavedJobItemProps> = ({ darkMode, savedJob, editJob
   }
 
   const onEditJob = (): void => {
-    editJob(savedJob);
+    console.log('Inside SavedJobItem the saved job is: ', savedJob);
+    showEditJob(savedJob);
   }
 
   return (
@@ -65,4 +51,4 @@ const mapStateToProps = (state: AppState) => ({
   darkMode: state.uiReducer.darkMode
 })
 
-export default connect(mapStateToProps, { editJob })(SavedJobItem);
+export default connect(mapStateToProps, { showEditJob })(SavedJobItem);

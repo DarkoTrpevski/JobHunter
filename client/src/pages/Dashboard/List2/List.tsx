@@ -1,32 +1,31 @@
-import React from 'react'
+import { Box } from '@chakra-ui/core';
+import React, { useEffect } from 'react'
+import SavedJobItem from '../SavedJobItem/SavedJobItem';
 
 interface Props<T> {
   data: T[];
-  onRowClick: (item: T) => void;
+  onItemClick: (item: T) => void;
 }
 
-const List = <T extends object>({ data, onRowClick }: Props<T>) => {
+
+const List = <T extends object>({ data, onItemClick }: Props<T>) => {
+
+  useEffect(() => {
+    console.log('Inside List, the data is: ', data);
+  }, [data])
 
   if(data.length === 0) return null;
+
   return (
-    <table>
-      <thead>
-        Some Title/Head
-      </thead>
-      <tbody>
-        {
-        data.map((item: T, index: number) => (
-          <tr key={index} onClick={() => onRowClick(item)}>
-            {
-            (Object.keys(data[0]) as Array<keyof T>).map(key => (
-              <td key={key.toString()}>{item[key]}</td>)
-            )
-            }
-          </tr>
-        ))
-        }
-      </tbody>
-    </table>
+    <>
+      {
+      data.map((item: T, idx: number) => (
+        <Box key = {idx} onClick={() => onItemClick(item)}>
+          <SavedJobItem savedJob = {item} />
+        </Box>
+      ))
+      }
+    </>
   );
 }
 export default List;
