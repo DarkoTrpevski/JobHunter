@@ -1,10 +1,10 @@
-import { GET_JOBS, CHANGE_JOB_ORIGIN, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE, SAVE_JOB, GET_SAVED_JOBS, EDIT_JOB } from './jobActionTypes';
+import { GET_JOBS, CHANGE_JOB_ORIGIN, GET_JOBS_SUCCESS, GET_JOBS_FAILURE, CLEAR_JOBS, SHOW_DETAILS, SHOW_EDIT_JOB, CLEAR_EDIT_JOB, LOAD_MORE_JOBS_SUCCESS, LOAD_MORE_JOBS_FAILURE, SAVE_JOB, GET_SAVED_JOBS } from './jobActionTypes';
 import { JobAction, JobsState } from '../types/types';
 
 const initialState: JobsState = {
   jobs: [],
   savedJobs: [],
-  jobOrigin: '',
+  jobOrigin: "github",
   backendMsg: "",
   jobDetail: null,
   jobEdit: null,
@@ -76,10 +76,15 @@ const jobsReducer = (state: JobsState = initialState, action: JobAction) => {
         ...state,
         backendMsg: payload
       }
-    case EDIT_JOB:
+    case SHOW_EDIT_JOB:
       return {
         ...state,
         jobEdit: payload
+      }
+    case CLEAR_EDIT_JOB:
+      return {
+        ...state,
+        jobEdit: null
       }
     case GET_SAVED_JOBS:
       return {

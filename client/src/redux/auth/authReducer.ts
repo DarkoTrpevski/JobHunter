@@ -1,14 +1,14 @@
 import { UserAction, UserState } from '../types/types';
 import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT } from './authActionTypes';
 
-const initialState = {
+const initialState: UserState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   user: null,
   loading: true,
 }
 
-const authReducer = (state: UserState = initialState, action: UserAction) => {
+const authReducer = (state = initialState, action: UserAction) => {
   const { type, payload } = action;
   switch (type) {
     case USER_LOADED:
@@ -20,11 +20,11 @@ const authReducer = (state: UserState = initialState, action: UserAction) => {
       }
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', payload.jwtToken)
+      payload && payload.jwtToken && localStorage.setItem('token', payload.jwtToken)
       return {
         ...state,
         ...payload,
-        token: payload.jwtToken,
+        token: payload?.jwtToken,
         isAuthenticated: true,
         loading: false
       }
@@ -37,7 +37,7 @@ const authReducer = (state: UserState = initialState, action: UserAction) => {
         ...state,
         ...payload,
         token: null,
-        isAuthenticated: null,
+        isAuthenticated: false,
         loading: false
       }
     default:
