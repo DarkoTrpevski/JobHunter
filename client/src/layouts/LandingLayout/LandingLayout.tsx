@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Header from '../../components/Header/Header'
+import Header from '../../components/Header3/Header'
+// import Header from '../../components/Header2/Header'
 import { AppState } from '../../redux/types/types';
 
 interface LandingLayoutProps {

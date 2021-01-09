@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IAlert } from '../../redux/types/types';
+import { AlertType } from '../../redux/types/types';
 
 interface AlertProps {
-  alerts: IAlert[]
+  alerts: AlertType[]
 }
 
 const Alert: React.FC<AlertProps> = ({ alerts }) => {

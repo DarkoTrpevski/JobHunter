@@ -10,6 +10,12 @@ export const mainLayoutStyle = {
     "0", // 480px upwards
     "0 auto", // 768px upwards
     "0 auto", // 992px upwards
+  ],
+  padding: [
+    "10px",
+    "10px",
+    "10px",
+    "10px 0",
   ]
 }
 
