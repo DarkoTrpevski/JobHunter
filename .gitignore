@@ -1,4 +1,5 @@
 client/node_modules
+client/src/assets
 client/fonts
 client/.pnp
 client/.pnp.js
