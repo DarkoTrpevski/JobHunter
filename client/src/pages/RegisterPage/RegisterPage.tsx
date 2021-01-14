@@ -3,8 +3,8 @@ import React from 'react'
 import RegisterForm from './RegisterForm/RegisterForm';
 import RegisterHeader from './RegisterHeader/RegisterHeader';
 
-interface RegisterProps {}
-const Register: React.FC<RegisterProps> = () => {
+interface RegisterPageProps {}
+const RegisterPage: React.FC<RegisterPageProps> = () => {
   return (
     <Flex width = "full" align = "center" justifyContent = "center">
       <Box w = "80%" borderRadius = {4} >
@@ -14,4 +14,4 @@ const Register: React.FC<RegisterProps> = () => {
     </Flex>
   );
 }
-export default Register;
+export default RegisterPage;

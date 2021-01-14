@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-interface NotFoundProps {}
+interface NotFoundPageProps {}
 
-export const NotFound: React.FC<NotFoundProps> = () => {
+export const NotFoundPage: React.FC<NotFoundPageProps> = () => {
   return (
     <section className = "NotFound">
       <p>
@@ -17,4 +17,4 @@ export const NotFound: React.FC<NotFoundProps> = () => {
     </section>
   );
 }
-export default NotFound;
+export default NotFoundPage;

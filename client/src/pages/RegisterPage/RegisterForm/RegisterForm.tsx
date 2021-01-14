@@ -17,7 +17,7 @@ const initialValues = {
 
 
 interface RegisterFormProps {
-  setAlert: (msg: string, alertType: string, timeOut?: number) => void,
+  setAlert: (msg: string, alertType: "error" | "success" | "warning" | "info", timeOut?: number) => void,
   registerUser: (username:string, email:string, password:string) => void
 }
 
@@ -36,7 +36,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ setAlert, registerUs
   const onRegister = async(e: React.FormEvent) => {
     e.preventDefault();
     if(password !== password2) {
-      setAlert("Passwords do not match", 'danger')
+      setAlert("Passwords do not match", 'error')
+      // setAlert("Passwords do not match", 'danger')
     } else {
       console.log('REGISTER SUCCESS');
 

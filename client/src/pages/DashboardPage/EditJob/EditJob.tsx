@@ -47,13 +47,13 @@ const EditJob: React.FC<EditJobFormProps> = ({ darkMode, editJob, jobEdit }) => 
     setValues(initialValues)
   }
 
-
   const editCustomJob = (e: FormEvent) => {
 		e.preventDefault();
     try {
       const job: JobType1 = {
         generatedId: jobEdit?.generatedId,
         company: values.company,
+        created_at: jobEdit?.created_at,
         title: values.title,
         description: values.description,
         location: values.location,
@@ -104,14 +104,9 @@ const EditJob: React.FC<EditJobFormProps> = ({ darkMode, editJob, jobEdit }) => 
           <Input name = "url" value = {values.url || ""} onChange = {handleChange} focusBorderColor="teal.200" variant = "flushed" type = "text" placeholder = "eg. https://facebook.com/careers/front-end-position?id=512497" spellCheck="false" />
         </FormControl>
         <Stack mt = {5}>
-          {/* <Checkbox name = "type" color = {`${VARIANT_COLOR}.400`} isChecked={values.type === "Full Time"} onChange={handleChange}> */}
-            {/* OVA TREBA DA GO SMENAM DA MOZHE DA SE KLIKA NA EDIT */}
-            {/* OVA TREBA DA GO SMENAM DA MOZHE DA SE KLIKA NA EDIT */}
-            {/* OVA TREBA DA GO SMENAM DA MOZHE DA SE KLIKA NA EDIT */}
           <Checkbox name = "type" color = {`${VARIANT_COLOR}.400`} isChecked={values.type || ""} onChange={handleChange}>
             Full-Time
           </Checkbox>
-          {/* OVA TREBA DA GO SMENAM(DA DODADAM JOB APPLICATION STATUS VO TYPES) */}
           <Select name = "applicationStatus" value = {values.applicationStatus || ""} onChange = {handleChange} placeholder="Select Application Status" bg = {`${!darkMode ? "#fff" : "gray.800"}`} focusBorderColor="teal.200">
             <option value="notApplied">Not Applied</option>
             <option value="applied">Applied</option>
@@ -120,7 +115,6 @@ const EditJob: React.FC<EditJobFormProps> = ({ darkMode, editJob, jobEdit }) => 
             <option value="interview">Interview</option>
             <option value="hired">Hiring Process</option>
           </Select>
-          {/* OVA TREBA DA GO SMENAM(DA DODADAM JOB APPLICATION STATUS VO TYPES) */}
           <FormControl>
             <FormLabel color = {`${VARIANT_COLOR}.400`}>Job Notes</FormLabel>
             <Textarea p = {2} name = "note" value={values.note || ""} onChange={handleChange} placeholder="Add notes about the job progress" size="md" spellCheck="false"  focusBorderColor="teal.200"/>

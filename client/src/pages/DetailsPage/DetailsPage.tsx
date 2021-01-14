@@ -8,14 +8,14 @@ import parse from 'html-react-parser';
 import { AppState } from '../../redux/types/types';
 
 
-interface JobDetailsProps {
+interface DetailsPageProps {
   darkMode: boolean,
   jobDetail: JobType1 | null,
   showDetails: (id: number | string) => void,
   match: any
 }
 
-const JobDetails: React.FC<JobDetailsProps> = ({ darkMode, jobDetail, showDetails, match: { params: { id } } }) => {
+const DetailsPage: React.FC<DetailsPageProps> = ({ darkMode, jobDetail, showDetails, match: { params: { id } } }) => {
 
   useEffect(() => {
     console.log('Inside JobDetails useEffect, params ID is:', id);
@@ -64,4 +64,4 @@ const mapStateToProps = (state: AppState) => ({
   jobDetail: state.jobsReducer.jobDetail
 })
 
-export default connect(mapStateToProps, { showDetails })(JobDetails);
+export default connect(mapStateToProps, { showDetails })(DetailsPage);

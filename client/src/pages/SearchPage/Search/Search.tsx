@@ -21,6 +21,8 @@ interface SearchProps {
   darkMode: boolean
 }
 
+console.log('Search.tsx');
+
 const Search: React.FC<SearchProps> = ({ values, changeSetValues, jobOrigin, changeJobOrigin, handleSubmit, handleClear, darkMode }) => {
 
   const { desc, loc, full } = values;

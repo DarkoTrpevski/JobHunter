@@ -57,10 +57,12 @@ const SearchContainer: React.FC<SearchContainerProps> = ({ children, jobs, loadi
     fetchMoreJobs(values.desc, values.loc, values.full, values.pageNum, jobOrigin);
   }
 
+  console.log('SearchContainer.tsx');
+
   return (
     <div className = "SearchContainer">
       <Search values = {values} changeSetValues = {handleChange} changeJobOrigin = {onJobOriginChange} handleSubmit = {handleSubmit} handleClear = {handleClear} />
-      {children}
+        {children}
       <LoadMore jobs = {jobs} loading = {loading} loadMoreJobs = {loadMoreJobs} />
     </div>
   )

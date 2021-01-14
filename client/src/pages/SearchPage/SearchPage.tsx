@@ -3,9 +3,11 @@ import SearchResults from './SearchResults/SearchResults';
 import SearchContainer from './SearchContainer/SearchContainer';
 import { Box } from '@chakra-ui/core';
 
-interface JobSearchProps {}
+interface SearchPageProps {}
 
-const Search: React.FC<JobSearchProps> = () => {
+const SearchPage: React.FC<SearchPageProps> = () => {
+  console.log('SearchPage.tsx');
+
   return (
     <Box w = "full">
       <SearchContainer>
@@ -14,4 +16,4 @@ const Search: React.FC<JobSearchProps> = () => {
     </Box>
   );
 }
-export default Search;
+export default SearchPage;

@@ -6,10 +6,10 @@ import LoadingSkeleton from '../../../components/LoadingSkeleton/LoadingSkeleton
 export interface ListItemProps<T> {
   value: T;
   onItemClick: (item: T) => void;
-  saveJob: (item: T) => void;
+  saveJob?: (item: T) => void;
   darkMode: boolean;
   loading: boolean;
-  isAddJobItem?: boolean;
+  isEditable?: boolean;
 }
 
 interface JobItemValues {
@@ -21,13 +21,12 @@ interface JobItemValues {
   location: string,
 }
 
-const ListItem = <T extends JobItemValues>({ value, onItemClick, saveJob, darkMode, loading, isAddJobItem }: ListItemProps<T>) => {
-
-  // const onClick = () => {
-  //   onItemClick(value);
-  // }
+const ListItem = <T extends JobItemValues>({ value, onItemClick, saveJob, darkMode, loading, isEditable }: ListItemProps<T>) => {
 
   let date = value && value.created_at && new Date(value.created_at);
+
+  console.log('Inside ListItem, the value is: ', value);
+
 
   const loadingJSX = (
     <Flex width = "full" align = "center" justifyContent = "center" my = {10} boxShadow = {`0 0 5px ${!darkMode ? "#1A202C" : "#69eed3"}`} borderRadius = {10} className = "List-item" >
@@ -50,7 +49,7 @@ const ListItem = <T extends JobItemValues>({ value, onItemClick, saveJob, darkMo
             </Box>
           </Stack>
           {
-            isAddJobItem && (
+            isEditable && (
               <Stack w = "full" flexDir = "row" justifyContent = "space-between" alignItems = "center">
                 <LoadingSkeleton width = {120} height = {30} />
               </Stack>
@@ -63,8 +62,7 @@ const ListItem = <T extends JobItemValues>({ value, onItemClick, saveJob, darkMo
 
 
   const listItemJSX = (
-    <Flex onClick = {() => onItemClick(value)} width = "full" align = "center" justifyContent = "center" my = {10} boxShadow = {`0 0 5px ${!darkMode ? "#1A202C" : "#69eed3"}`} borderRadius = {10} className = "List-item" >
-      <Link w = "full" _hover = {{textDecor: "none"}}>
+    <Flex userSelect="none" width = "full" align = "center" justifyContent = "center" my = {4} boxShadow = {`0 0 5px ${!darkMode ? "#1A202C" : "#69eed3"}`} borderRadius = {10} className = "List-item" >
         <Box w = "full" height = "full" >
           <Flex w = "full" h = "full" alignItems = "center" justifyContent = "space-between" flexDir = "column" paddingY = {10} paddingX = {5} >
             <Stack w = "full" flexDir = "row" justifyContent = "space-between" alignItems = "center">
@@ -76,7 +74,7 @@ const ListItem = <T extends JobItemValues>({ value, onItemClick, saveJob, darkMo
               </Box>
             </Stack>
             <Stack w = "full" flexDir = "row" justifyContent = "space-between" alignItems = "center">
-              <Box as = "h4" fontSize = "1rem" >
+              <Box style={{marginBottom:'0'}}>
                 {
                 <>
                   <span className="info-job-company">
@@ -93,19 +91,23 @@ const ListItem = <T extends JobItemValues>({ value, onItemClick, saveJob, darkMo
                 <span>{value.location && value.location}</span>
               </Box>
             </Stack>
-            {
-              isAddJobItem && (
-                <Stack w = "full" flexDir = "row" justifyContent = "space-between" alignItems = "center">
-                  <Tag onClick = {() => saveJob(value)}>
-                    <TagIcon aria-label = "Save Job to Dashboard" icon = "add" />
-                    <TagLabel>Save Job</TagLabel>
-                  </Tag>
-                </Stack>
-              )
-            }
+            <Stack w = "full" flexDir = "row" justifyContent = "flex-start" alignItems = "center">
+            {/* // SAVE JOB KJE SE UPOTREBI VO SEARCH PAGE, A NEMA DA SE UPOTREBI VO DASHBOARD PAGE
+            // SAVE JOB KJE SE UPOTREBI VO SEARCH PAGE, A NEMA DA SE UPOTREBI VO DASHBOARD PAGE
+            // SAVE JOB KJE SE UPOTREBI VO SEARCH PAGE, A NEMA DA SE UPOTREBI VO DASHBOARD PAGE */}
+            {isEditable ? (
+              <Tag onClick = {() => onItemClick(value)} cursor="pointer" >
+                <TagIcon aria-label = "Save Job to Dashboard" icon = "add" />
+                <TagLabel>Edit Job</TagLabel>
+              </Tag>) : (                
+                <Tag onClick = {() => saveJob && saveJob(value)} cursor="pointer" >
+                  <TagIcon aria-label = "Save Job to Dashboard" icon = "add" />
+                  <TagLabel>Save Job</TagLabel>
+                </Tag>
+                )}
+            </Stack>
           </Flex>
         </Box>
-      </Link>
     </Flex>
   )
 

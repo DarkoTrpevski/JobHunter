@@ -6,11 +6,11 @@ import HomeBg from '../../assets/homebg1.svg';
 import CustomButton from '../../components/UI/CustomButton/CustomButton';
 import { Link } from 'react-router-dom';
 
-interface HomeProps {
+interface HomePageProps {
   darkMode: boolean
 }
 
-const Home: React.FC<HomeProps> = ({ darkMode }) => {
+const HomePage: React.FC<HomePageProps> = ({ darkMode }) => {
   
   return (
     <Stack w={["100%", "100%" , "90%"]} h="full" minH="100vh" mx="auto" as ="section" align="center" justify="center" pt={20} className = "Home" >
@@ -54,4 +54,4 @@ const mapState = (state: AppState) => ({
   darkMode: state.uiReducer.darkMode
 })
 
-export default connect(mapState)(Home);
+export default connect(mapState)(HomePage);

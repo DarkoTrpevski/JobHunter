@@ -3,8 +3,8 @@ import React from 'react'
 import LoginForm from './LoginForm/LoginForm';
 import LoginHeader from './LoginHeader/LoginHeader';
 
-interface LoginProps {}
-const Login: React.FC<LoginProps> = () => {
+interface LoginPageProps {}
+const LoginPage: React.FC<LoginPageProps> = () => {
 
   return (    
     <Flex width = "full" align = "center" justifyContent = "center">
@@ -15,4 +15,4 @@ const Login: React.FC<LoginProps> = () => {
     </Flex>
   )
 }
-export default Login;
+export default LoginPage;
