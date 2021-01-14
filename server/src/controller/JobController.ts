@@ -45,12 +45,7 @@ export class JobController {
       //Save Job in DB
       await jobRepository.save(job);
 
-      //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
-      res.json(job);
-      //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
-
-
-      // res.json({message: "Successfully Saved."})
+      res.json({ message: "Job successfully saved." })
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Server Error");
@@ -106,11 +101,11 @@ export class JobController {
       await jobRepository.update({ generatedId: generatedId }, foundJob)
 
       //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
-      res.json(foundJob);
+      // res.json(foundJob);
       //POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING/POSTMAN TESTING
 
 
-      // res.json({message: "Successfully Saved."})
+      res.json({ message: "Job successfully edited." })
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Server Error");

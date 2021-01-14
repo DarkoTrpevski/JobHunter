@@ -8,6 +8,7 @@ export const authMiddleware = async(req: IUserRequest, res: Response, next: Next
   try {
       //Grab the token from the request
       const jwtToken: string = req.header("token");
+      console.log('Inside authMiddleware, jwtToken is: ', jwtToken);
       if(!jwtToken) {
         return res.status(401).json({ msg: 'No token, authorization denied' });
       }
